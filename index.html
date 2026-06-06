@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="bn">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>সৌরজগৎ ও ভূমণ্ডল — MCQ Practice</title>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap"
+            rel="stylesheet"
+        />
+        <style>
+            :root {
+                --bg:          #f4f0fb;
+                --bg-2:        #ede7f9;
+                --surface:     #ffffff;
+                --surface-2:   rgba(255, 255, 255, 0.7);
+                --purple-1:    #7c3aed;
+                --purple-2:    #a855f7;
+                --purple-soft: #ddd6fe;
+                --purple-dim:  rgba(124, 58, 237, 0.08);
+                --accent:      #c084fc;
+                --correct:     #16a34a;
+                --correct-bg:  #f0fdf4;
+                --correct-bd:  #bbf7d0;
+                --wrong:       #dc2626;
+                --wrong-bg:    #fef2f2;
+                --wrong-bd:    #fecaca;
+                --text:        #1e1b2e;
+                --text-2:      #6b5f8c;
+                --text-3:      #a393c4;
+                --border:      #e5d9f8;
+                --shadow:      0 2px 16px rgba(124, 58, 237, 0.08);
+                --shadow-card: 0 4px 32px rgba(124, 58, 237, 0.1);
+            }
+
+            *, *::before, *::after {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
+
+            body {
+                background-color: var(--bg);
+                background-image:
+                    radial-gradient(ellipse at 10% 0%, rgba(167, 139, 250, 0.22) 0%, transparent 55%),
+                    radial-gradient(ellipse at 90% 100%, rgba(192, 132, 252, 0.18) 0%, transparent 55%);
+                min-height: 100vh;
+                font-family: 'Hind Siliguri', sans-serif;
+                color: var(--text);
+            }
+
+            .wrapper {
+                max-width: 780px;
+                margin: 0 auto;
+                padding: 0 20px 80px;
+            }
+
+            header {
+                text-align: center;
+                padding: 52px 20px 36px;
+            }
+
+            .badge {
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+                background: var(--purple-dim);
+                border: 1px solid var(--purple-soft);
+                border-radius: 100px;
+                padding: 5px 16px;
+                font-size: 0.75rem;
+                font-weight: 600;
+                letter-spacing: 0.08em;
+                color: var(--purple-1);
+                text-transform: uppercase;
+                margin-bottom: 18px;
+            }
+
+            h1 {
+                font-family: 'DM Serif Display', serif;
+                font-size: clamp(2rem, 5.5vw, 3.2rem);
+                line-height: 1.15;
+                color: var(--text);
+                margin-bottom: 10px;
+            }
+
+            h1 span {
+                background: linear-gradient(135deg, var(--purple-1), var(--purple-2));
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+            }
+
+            .tagline {
+                font-size: 0.95rem;
+                color: var(--text-2);
+                font-weight: 400;
+            }
+
+            .scoreboard {
+                display: flex;
+                justify-content: center;
+                gap: 14px;
+                flex-wrap: wrap;
+                margin-bottom: 28px;
+            }
+
+            .score-pill {
+                background: var(--surface);
+                border: 1px solid var(--border);
+                border-radius: 14px;
+                padding: 12px 22px;
+                text-align: center;
+                box-shadow: var(--shadow);
+                min-width: 100px;
+            }
+
+            .score-pill strong {
+                display: block;
+                font-size: 1.6rem;
+                font-weight: 700;
+                line-height: 1;
+                margin-bottom: 3px;
+            }
+
+            .score-pill span {
+                font-size: 0.7rem;
+                letter-spacing: 0.07em;
+                text-transform: uppercase;
+                color: var(--text-3);
+                font-weight: 600;
+            }
+
+            .pill-correct strong { color: var(--correct); }
+            .pill-wrong   strong { color: var(--wrong); }
+            .pill-total   strong { color: var(--purple-1); }
+
+            .dot-nav {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 6px;
+                justify-content: center;
+                margin-bottom: 24px;
+            }
+
+            .dot {
+                width: 30px;
+                height: 30px;
+                border-radius: 8px;
+                border: 1.5px solid var(--border);
+                background: var(--surface);
+                font-size: 0.7rem;
+                font-weight: 700;
+                color: var(--text-3);
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: all 0.18s ease;
+                font-family: 'Hind Siliguri', sans-serif;
+            }
+
+            .dot:hover {
+                border-color: var(--purple-2);
+                color: var(--purple-1);
+            }
+
+            .dot.active {
+                background: var(--purple-1);
+                border-color: var(--purple-1);
+                color: #fff;
+                box-shadow: 0 2px 10px rgba(124, 58, 237, 0.3);
+            }
+
+            .dot.done-right {
+                background: var(--correct-bg);
+                border-color: var(--correct-bd);
+                color: var(--correct);
+            }
+
+            .dot.done-wrong {
+                background: var(--wrong-bg);
+                border-color: var(--wrong-bd);
+                color: var(--wrong);
+            }
+
+            .progress-track {
+                background: var(--purple-soft);
+                border-radius: 100px;
+                height: 5px;
+                overflow: hidden;
+                margin-bottom: 8px;
+            }
+
+            .progress-fill {
+                height: 100%;
+                border-radius: 100px;
+                background: linear-gradient(90deg, var(--purple-1), var(--purple-2));
+                transition: width 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+                width: 0%;
+            }
+
+            .progress-meta {
+                display: flex;
+                justify-content: space-between;
+                font-size: 0.78rem;
+                color: var(--text-3);
+                margin-bottom: 24px;
+                font-weight: 500;
+            }
+
+            .question-card {
+                background: var(--surface);
+                border: 1px solid var(--border);
+                border-radius: 22px;
+                padding: 30px 34px;
+                margin-bottom: 18px;
+                box-shadow: var(--shadow-card);
+                position: relative;
+                overflow: hidden;
+                animation: slide-up 0.35s cubic-bezier(0.34, 1.4, 0.64, 1);
+            }
+
+            .question-card::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 3px;
+                background: linear-gradient(90deg, var(--purple-1), var(--accent));
+            }
+
+            @keyframes slide-up {
+                from { opacity: 0; transform: translateY(18px) scale(0.98); }
+                to   { opacity: 1; transform: translateY(0)   scale(1); }
+            }
+
+            .q-label {
+                font-size: 0.72rem;
+                font-weight: 700;
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
+                color: var(--purple-1);
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                margin-bottom: 14px;
+            }
+
+            .q-label::after {
+                content: '';
+                flex: 1;
+                height: 1px;
+                background: var(--border);
+            }
+
+            .q-text {
+                font-size: 1.08rem;
+                font-weight: 500;
+                line-height: 1.65;
+                color: var(--text);
+                margin-bottom: 22px;
+            }
+
+            .options {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .option-btn {
+                display: flex;
+                align-items: center;
+                gap: 13px;
+                background: var(--bg);
+                border: 1.5px solid var(--border);
+                border-radius: 12px;
+                padding: 12px 16px;
+                cursor: pointer;
+                text-align: left;
+                font-family: 'Hind Siliguri', sans-serif;
+                font-size: 0.97rem;
+                color: var(--text);
+                width: 100%;
+                transition: all 0.18s ease;
+            }
+
+            .option-btn:hover:not(:disabled) {
+                border-color: var(--purple-2);
+                background: var(--purple-dim);
+                transform: translateX(3px);
+            }
+
+            .option-key {
+                width: 30px;
+                height: 30px;
+                border-radius: 8px;
+                background: var(--surface);
+                border: 1.5px solid var(--border);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 0.78rem;
+                font-weight: 700;
+                color: var(--text-2);
+                flex-shrink: 0;
+                transition: all 0.18s ease;
+            }
+
+            .option-btn.correct {
+                background: var(--correct-bg);
+                border-color: var(--correct-bd);
+            }
+
+            .option-btn.correct .option-key {
+                background: var(--correct);
+                border-color: var(--correct);
+                color: #fff;
+            }
+
+            .option-btn.wrong {
+                background: var(--wrong-bg);
+                border-color: var(--wrong-bd);
+            }
+
+            .option-btn.wrong .option-key {
+                background: var(--wrong);
+                border-color: var(--wrong);
+                color: #fff;
+            }
+
+            .option-btn:disabled { cursor: default; transform: none; }
+
+            .feedback {
+                display: none;
+                align-items: center;
+                gap: 10px;
+                margin-top: 16px;
+                padding: 11px 16px;
+                border-radius: 10px;
+                font-size: 0.88rem;
+                font-weight: 500;
+                animation: fade-in 0.25s ease;
+            }
+
+            .feedback.visible { display: flex; }
+
+            .feedback.fb-ok {
+                background: var(--correct-bg);
+                border: 1px solid var(--correct-bd);
+                color: var(--correct);
+            }
+
+            .feedback.fb-err {
+                background: var(--wrong-bg);
+                border: 1px solid var(--wrong-bd);
+                color: var(--wrong);
+            }
+
+            @keyframes fade-in {
+                from { opacity: 0; transform: translateY(-4px); }
+                to   { opacity: 1; transform: translateY(0); }
+            }
+
+            .nav-row {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                gap: 12px;
+                flex-wrap: wrap;
+            }
+
+            .btn {
+                display: inline-flex;
+                align-items: center;
+                gap: 7px;
+                padding: 11px 24px;
+                border-radius: 12px;
+                border: none;
+                font-family: 'Hind Siliguri', sans-serif;
+                font-size: 0.93rem;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.18s ease;
+            }
+
+            .btn-ghost {
+                background: var(--surface);
+                border: 1.5px solid var(--border);
+                color: var(--text-2);
+            }
+
+            .btn-ghost:hover:not(:disabled) {
+                border-color: var(--purple-2);
+                color: var(--purple-1);
+            }
+
+            .btn-ghost:disabled {
+                opacity: 0.35;
+                cursor: default;
+            }
+
+            .btn-outline {
+                background: transparent;
+                border: 1.5px solid var(--purple-soft);
+                color: var(--purple-1);
+            }
+
+            .btn-outline:hover {
+                background: var(--purple-dim);
+            }
+
+            .btn-primary {
+                background: linear-gradient(135deg, var(--purple-1), var(--purple-2));
+                color: #fff;
+                box-shadow: 0 3px 16px rgba(124, 58, 237, 0.28);
+            }
+
+            .btn-primary:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 6px 22px rgba(124, 58, 237, 0.35);
+            }
+
+            .result-view {
+                display: none;
+                text-align: center;
+                animation: slide-up 0.4s ease;
+            }
+
+            .result-emoji {
+                font-size: 4.5rem;
+                margin-bottom: 18px;
+                display: block;
+                animation: bob 3s ease-in-out infinite;
+            }
+
+            @keyframes bob {
+                0%, 100% { transform: translateY(0); }
+                50%       { transform: translateY(-10px); }
+            }
+
+            .result-title {
+                font-family: 'DM Serif Display', serif;
+                font-size: 2.4rem;
+                color: var(--text);
+                margin-bottom: 6px;
+            }
+
+            .result-sub {
+                font-size: 0.97rem;
+                color: var(--text-2);
+                margin-bottom: 32px;
+            }
+
+            .result-score-big {
+                font-size: 5rem;
+                font-weight: 700;
+                line-height: 1;
+                background: linear-gradient(135deg, var(--purple-1), var(--purple-2));
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+            }
+
+            .result-denom {
+                font-size: 1rem;
+                color: var(--text-3);
+                margin-bottom: 30px;
+            }
+
+            .result-stats {
+                display: flex;
+                justify-content: center;
+                gap: 14px;
+                flex-wrap: wrap;
+                margin-bottom: 26px;
+            }
+
+            .r-chip {
+                background: var(--surface);
+                border: 1px solid var(--border);
+                border-radius: 14px;
+                padding: 14px 22px;
+                min-width: 110px;
+                box-shadow: var(--shadow);
+            }
+
+            .r-chip strong {
+                display: block;
+                font-size: 1.7rem;
+                font-weight: 700;
+                line-height: 1;
+                margin-bottom: 4px;
+            }
+
+            .r-chip span {
+                font-size: 0.68rem;
+                letter-spacing: 0.07em;
+                text-transform: uppercase;
+                color: var(--text-3);
+                font-weight: 600;
+            }
+
+            .r-chip.rc strong { color: var(--correct); }
+            .r-chip.rw strong { color: var(--wrong); }
+            .r-chip.rp strong { color: var(--purple-1); }
+
+            .grade-tag {
+                display: inline-block;
+                padding: 8px 22px;
+                border-radius: 100px;
+                font-weight: 700;
+                font-size: 0.9rem;
+                letter-spacing: 0.05em;
+                margin-bottom: 32px;
+            }
+
+            @media (max-width: 580px) {
+                .question-card { padding: 20px 18px; }
+                .nav-row .btn  { flex: 1; justify-content: center; }
+                h1 { font-size: 1.9rem; }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="wrapper">
+
+            <header>
+                <div class="badge">✦ দশম শ্রেণি · অধ্যায় ৩</div>
+                <h1>সৌরজগৎ ও <span>ভূমণ্ডল</span></h1>
+                <p class="tagline">MCQ Practice</p>
+            </header>
+
+            <section class="scoreboard" id="scoreboard" aria-label="স্কোর">
+                <div class="score-pill pill-correct">
+                    <strong id="correctCount">0</strong>
+                    <span>✓ সঠিক</span>
+                </div>
+                <div class="score-pill pill-wrong">
+                    <strong id="wrongCount">0</strong>
+                    <span>✗ ভুল</span>
+                </div>
+                <div class="score-pill pill-total">
+                    <strong id="totalAnswered">0/30</strong>
+                    <span>উত্তর দেওয়া</span>
+                </div>
+            </section>
+
+            <nav class="dot-nav" id="dotNav" aria-label="প্রশ্ন নেভিগেশন"></nav>
+
+            <div class="progress-track">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="progress-meta">
+                <span id="progressLabel">প্রশ্ন <strong>1</strong> / 30</span>
+                <span id="progressPct">0%</span>
+            </div>
+
+            <main id="quizArea">
+                <article class="question-card" id="questionCard">
+                    <p class="q-label" id="qLabel">প্রশ্ন ০১</p>
+                    <p class="q-text" id="qText"></p>
+                    <div class="options" id="optionsList"></div>
+                    <div class="feedback" id="feedback">
+                        <span id="feedbackIcon"></span>
+                        <span id="feedbackText"></span>
+                    </div>
+                </article>
+
+                <div class="nav-row">
+                    <button class="btn btn-ghost" id="prevBtn" onclick="navigate(-1)">← আগে</button>
+                    <button class="btn btn-outline" onclick="resetQuiz()">↺ রিসেট</button>
+                    <button class="btn btn-primary" id="nextBtn" onclick="navigate(1)">পরের প্রশ্ন →</button>
+                </div>
+            </main>
+
+            <section class="result-view" id="resultView">
+                <span class="result-emoji" id="resultEmoji"></span>
+                <h2 class="result-title" id="resultTitle"></h2>
+                <p class="result-sub" id="resultSub"></p>
+                <div class="result-score-big" id="resultScore"></div>
+                <p class="result-denom">/ 30</p>
+                <div class="result-stats">
+                    <div class="r-chip rc">
+                        <strong id="rCorrect">0</strong>
+                        <span>✓ সঠিক</span>
+                    </div>
+                    <div class="r-chip rw">
+                        <strong id="rWrong">0</strong>
+                        <span>✗ ভুল</span>
+                    </div>
+                    <div class="r-chip rp">
+                        <strong id="rPct">0%</strong>
+                        <span>স্কোর</span>
+                    </div>
+                </div>
+                <div class="grade-tag" id="gradeTag"></div>
+                <br />
+                <button class="btn btn-primary" onclick="resetQuiz()">↺ আবার চেষ্টা করো</button>
+            </section>
+
+        </div>
+
+        <script>
+            const questions = [
+                { q: "সৌরজগতের সমস্ত গতি ও শক্তির প্রাণকেন্দ্র কোনটি?",                           opts: ["পৃথিবী","বৃহস্পতি","সূর্য","চাঁদ"],                                          ans: 2 },
+                { q: "সূর্য থেকে দূরত্বের ভিত্তিতে সৌরজগতের দ্বিতীয় গ্রহ কোনটি?",                opts: ["বুধ","শুক্র","পৃথিবী","মঙ্গল"],                                              ans: 1 },
+                { q: "কোন গ্রহকে 'সন্ধ্যাতারা' ও 'শুকতারা' বলা হয়?",                             opts: ["বুধ","শুক্র","মঙ্গল","শনি"],                                                 ans: 1 },
+                { q: "সৌরজগতের সবচেয়ে ক্ষুদ্রতম গ্রহ কোনটি?",                                   opts: ["বুধ","শুক্র","পৃথিবী","নেপচুন"],                                             ans: 0 },
+                { q: "মঙ্গলের উপগ্রহ কয়টি?",                                                     opts: ["১টি","২টি","৩টি","৪টি"],                                                     ans: 1 },
+                { q: "সৌরজগতের সবচেয়ে বড় গ্রহ কোনটি?",                                          opts: ["শনি","ইউরেনাস","বৃহস্পতি","নেপচুন"],                                         ans: 2 },
+                { q: "শনির চারপাশে কয়টি উজ্জ্বল বলয় রয়েছে?",                                   opts: ["১টি","২টি","৩টি","৪টি"],                                                     ans: 2 },
+                { q: "সূর্য পৃথিবী অপেক্ষা কতগুণ বড়?",                                          opts: ["১০ লক্ষ","১১ লক্ষ","১২ লক্ষ","১৩ লক্ষ"],                                   ans: 1 },
+                { q: "সৌরকলঙ্ক (Sun spot) কী?",                                                   opts: ["সূর্যের কালো দাগ","গ্রহের ছিদ্র","ধূমকেতু","উল্কা"],                       ans: 0 },
+                { q: "বায়ুমণ্ডলের সর্বনিম্ন স্তর কোনটি?",                                       opts: ["ওজোন স্তর","স্ট্রাটোস্ফিয়ার","ট্রপোমণ্ডল","মেসোমণ্ডল"],                   ans: 2 },
+                { q: "ওজোন স্তরের গভীরতা কত?",                                                    opts: ["৫-৮ কিমি","৮-১০ কিমি","১২-১৬ কিমি","২০-২৫ কিমি"],                         ans: 3 },
+                { q: "পৃথিবীর ব্যাসার্ধ কত?",                                                    opts: ["৬৩৭১ কিমি","৫৩৭১ কিমি","৪৩৭১ কিমি","৭৩৭১ কিমি"],                         ans: 0 },
+                { q: "কেন্দ্রমণ্ডলকে 'নাইফা' (Nife) বলার কারণ কী?",                              opts: ["নিকেল ও ফসফরাস","নিকেল ও লৌহ","নিকেল ও ম্যাগনেসিয়াম","নিকেল ও কার্বন"], ans: 1 },
+                { q: "অশ্মমণ্ডলকে কী বলা হয়?",                                                  opts: ["সিয়াল (Sial)","সিমা (Sima)","নাইফা (Nife)","কোনটিই নয়"],                 ans: 0 },
+                { q: "গুরুমণ্ডলকে কী বলা হয়?",                                                   opts: ["সিয়াল (Sial)","সিমা (Sima)","নাইফা (Nife)","অশ্মমণ্ডল"],                 ans: 1 },
+                { q: "নিরক্ষরেখার মান কত?",                                                      opts: ["৯০°","৪৫°","০°","২৩.৫°"],                                                   ans: 2 },
+                { q: "বাংলাদেশের ওপর দিয়ে কোন রেখাটি অতিক্রম করেছে?",                           opts: ["নিরক্ষরেখা","কর্কটক্রান্তি","মকরক্রান্তি","মূল মধ্যরেখা"],                 ans: 1 },
+                { q: "পৃথিবীর মোট পরিধি কত ডিগ্রি?",                                             opts: ["৯০°","১৮০°","২৭০°","৩৬০°"],                                                 ans: 3 },
+                { q: "১° দ্রাঘিমার পার্থক্যে সময়ের ব্যবধান কত?",                                opts: ["৪ মিনিট","৪ সেকেন্ড","১ ঘণ্টা","১০ মিনিট"],                                ans: 0 },
+                { q: "১' দ্রাঘিমার পার্থক্যে সময়ের ব্যবধান কত?",                                opts: ["১ মিনিট","৪ মিনিট","৪ সেকেন্ড","১০ সেকেন্ড"],                              ans: 2 },
+                { q: "গ্রিনিচ কোন দেশে অবস্থিত?",                                               opts: ["আমেরিকা","যুক্তরাজ্য","ফ্রান্স","জার্মানি"],                                ans: 1 },
+                { q: "আন্তর্জাতিক তারিখ রেখার মান কত?",                                          opts: ["০°","৯০°","১৮০°","৩৬০°"],                                                   ans: 2 },
+                { q: "আহ্নিক গতির সময়কাল কত?",                                                  opts: ["২৪ ঘণ্টা","২৩ ঘণ্টা ৫৬ মিনিট ৪ সেকেন্ড","৩৬৫ দিন","২২ ঘণ্টা"],          ans: 1 },
+                { q: "বার্ষিক গতির ফলে কী ঘটে?",                                                opts: ["দিন-রাত হয়","ঋতু পরিবর্তন হয়","জোয়ার-ভাটা হয়","সূর্যগ্রহণ হয়"],      ans: 1 },
+                { q: "উত্তর গোলার্ধে দীর্ঘতম দিন হয় কবে?",                                     opts: ["২১শে মার্চ","২১শে জুন","২৩শে সেপ্টেম্বর","২২শে ডিসেম্বর"],                 ans: 1 },
+                { q: "২১শে জুনকে কী বলা হয়?",                                                   opts: ["উত্তর অয়নান্ত","দক্ষিণ অয়নান্ত","বিষুব","মহাবিষুব"],                      ans: 0 },
+                { q: "২২শে ডিসেম্বর সূর্য কোন রেখায় লম্বভাবে কিরণ দেয়?",                      opts: ["নিরক্ষরেখা","কর্কটক্রান্তি","মকরক্রান্তি","সুমেরুবৃত্ত"],                 ans: 2 },
+                { q: "ঢাকার প্রতিপাদ স্থান কোথায় অবস্থিত?",                                     opts: ["আমেরিকা","প্রশান্ত মহাসাগর","আটলান্টিক মহাসাগর","ভারত মহাসাগর"],          ans: 1 },
+                { q: "কর্কটক্রান্তি রেখার মান কত?",                                             opts: ["০°","২৩.৫° উত্তর","২৩.৫° দক্ষিণ","৬৬.৫° উত্তর"],                         ans: 1 },
+                { q: "সূর্যকে প্রদক্ষিণ করতে কোন গ্রহের ৮৮ দিন সময় লাগে?",                     opts: ["পৃথিবী","শুক্র","বুধ","মঙ্গল"],                                              ans: 2 },
+            ];
+
+            const labels   = ['ক', 'খ', 'গ', 'ঘ'];
+            const total     = questions.length;
+            let current     = 0;
+            let answers     = new Array(total).fill(null);
+            let selected    = new Array(total).fill(null);
+
+            function buildDots() {
+                const nav = document.getElementById('dotNav');
+                nav.innerHTML = '';
+                questions.forEach((_, i) => {
+                    const btn = document.createElement('button');
+                    btn.className = 'dot';
+                    btn.textContent = i + 1;
+                    btn.setAttribute('aria-label', `প্রশ্ন ${i + 1}`);
+                    btn.onclick = () => goTo(i);
+                    nav.appendChild(btn);
+                });
+            }
+
+            function refreshDots() {
+                document.querySelectorAll('.dot').forEach((btn, i) => {
+                    btn.className = 'dot';
+                    if (i === current)        btn.classList.add('active');
+                    if (answers[i] === true)  btn.classList.add('done-right');
+                    if (answers[i] === false) btn.classList.add('done-wrong');
+                });
+            }
+
+            function refreshProgress() {
+                const done = answers.filter(a => a !== null).length;
+                const pct  = Math.round((done / total) * 100);
+                document.getElementById('progressFill').style.width  = pct + '%';
+                document.getElementById('progressLabel').innerHTML    = `প্রশ্ন <strong>${current + 1}</strong> / ${total}`;
+                document.getElementById('progressPct').textContent    = pct + '%';
+            }
+
+            function refreshScoreboard() {
+                const c = answers.filter(a => a === true).length;
+                const w = answers.filter(a => a === false).length;
+                const d = answers.filter(a => a !== null).length;
+                document.getElementById('correctCount').textContent  = c;
+                document.getElementById('wrongCount').textContent    = w;
+                document.getElementById('totalAnswered').textContent = `${d}/${total}`;
+            }
+
+            function render() {
+                const q = questions[current];
+                const n = String(current + 1).padStart(2, '0');
+
+                document.getElementById('qLabel').textContent = `প্রশ্ন ${n}`;
+                document.getElementById('qText').textContent  = q.q;
+
+                const list = document.getElementById('optionsList');
+                list.innerHTML = '';
+
+                q.opts.forEach((opt, i) => {
+                    const btn = document.createElement('button');
+                    btn.className = 'option-btn';
+                    btn.innerHTML = `<span class="option-key">${labels[i]}</span><span>${opt}</span>`;
+                    btn.onclick   = () => pickAnswer(i);
+                    list.appendChild(btn);
+                });
+
+                const fb = document.getElementById('feedback');
+                fb.className = 'feedback';
+
+                if (selected[current] !== null) {
+                    const btns = list.querySelectorAll('.option-btn');
+                    btns.forEach((b, i) => {
+                        b.disabled = true;
+                        if (i === q.ans)                          b.classList.add('correct');
+                        if (i === selected[current] && i !== q.ans) b.classList.add('wrong');
+                    });
+                    showFeedback(selected[current] === q.ans);
+                }
+
+                const nextBtn = document.getElementById('nextBtn');
+                if (current === total - 1) {
+                    nextBtn.textContent = 'ফলাফল দেখো →';
+                    nextBtn.onclick = showResult;
+                } else {
+                    nextBtn.textContent = 'পরের প্রশ্ন →';
+                    nextBtn.onclick = () => navigate(1);
+                }
+
+                document.getElementById('prevBtn').disabled = current === 0;
+
+                const card = document.getElementById('questionCard');
+                card.style.animation = 'none';
+                void card.offsetHeight;
+                card.style.animation = 'slide-up 0.35s cubic-bezier(0.34, 1.4, 0.64, 1)';
+
+                refreshDots();
+                refreshProgress();
+                refreshScoreboard();
+            }
+
+            function pickAnswer(idx) {
+                if (selected[current] !== null) return;
+
+                const q         = questions[current];
+                selected[current] = idx;
+                answers[current]  = idx === q.ans;
+
+                document.querySelectorAll('.option-btn').forEach((b, i) => {
+                    b.disabled = true;
+                    if (i === q.ans)           b.classList.add('correct');
+                    if (i === idx && i !== q.ans) b.classList.add('wrong');
+                });
+
+                showFeedback(idx === q.ans);
+                refreshDots();
+                refreshProgress();
+                refreshScoreboard();
+            }
+
+            function showFeedback(isCorrect) {
+                const fb   = document.getElementById('feedback');
+                const icon = document.getElementById('feedbackIcon');
+                const txt  = document.getElementById('feedbackText');
+
+                if (isCorrect) {
+                    fb.className      = 'feedback fb-ok visible';
+                    icon.textContent  = '🎉';
+                    txt.textContent   = 'দারুণ! সঠিক উত্তর দিয়েছো।';
+                } else {
+                    const q          = questions[current];
+                    fb.className     = 'feedback fb-err visible';
+                    icon.textContent = '💡';
+                    txt.textContent  = `ভুল হয়েছে। সঠিক উত্তর: (${labels[q.ans]}) ${q.opts[q.ans]}`;
+                }
+            }
+
+            function navigate(dir) {
+                const next = current + dir;
+                if (next >= 0 && next < total) goTo(next);
+            }
+
+            function goTo(idx) {
+                current = idx;
+                render();
+            }
+
+            function showResult() {
+                const done = answers.filter(a => a !== null).length;
+                if (done < total) {
+                    const rem = total - done;
+                    if (!confirm(`এখনো ${rem}টি প্রশ্নের উত্তর দাওনি। তবুও ফলাফল দেখতে চাও?`)) return;
+                }
+
+                document.getElementById('quizArea').style.display    = 'none';
+                document.getElementById('scoreboard').style.display  = 'none';
+                document.getElementById('dotNav').style.display      = 'none';
+                document.querySelector('.progress-track').style.display = 'none';
+                document.querySelector('.progress-meta').style.display  = 'none';
+                document.getElementById('resultView').style.display   = 'block';
+
+                const correct = answers.filter(a => a === true).length;
+                const wrong   = answers.filter(a => a === false).length;
+                const pct     = Math.round((correct / total) * 100);
+
+                document.getElementById('rCorrect').textContent = correct;
+                document.getElementById('rWrong').textContent   = wrong;
+                document.getElementById('rPct').textContent     = pct + '%';
+                document.getElementById('resultScore').textContent = correct;
+
+                let emoji, title, sub, grade, gStyle;
+
+                if (pct >= 90) {
+                    emoji = '🏆'; title = 'অসাধারণ মেধাবী!';    sub = 'তুমি সত্যিকারের বিশেষজ্ঞ!';
+                    grade = 'A+ · স্বর্ণ পদক';
+                    gStyle = 'background:#fef9c3;border:1px solid #fde68a;color:#92400e';
+                } else if (pct >= 75) {
+                    emoji = '🌟'; title = 'চমৎকার!';              sub = 'আরেকটু চেষ্টায় পারফেক্ট হবে!';
+                    grade = 'A · অসাধারণ';
+                    gStyle = 'background:#f3e8ff;border:1px solid #d8b4fe;color:#6b21a8';
+                } else if (pct >= 60) {
+                    emoji = '📘'; title = 'ভালো চেষ্টা!';         sub = 'আরেকটু পড়লেই আরো ভালো হবে।';
+                    grade = 'B · ভালো';
+                    gStyle = 'background:#ede9fe;border:1px solid #c4b5fd;color:#5b21b6';
+                } else if (pct >= 40) {
+                    emoji = '📖'; title = 'আরো পড়তে হবে!';        sub = 'নোটগুলো আবার ভালো করে পড়ো।';
+                    grade = 'C · অনুশীলন প্রয়োজন';
+                    gStyle = 'background:#fff7ed;border:1px solid #fed7aa;color:#c2410c';
+                } else {
+                    emoji = '💪'; title = 'আরো পরিশ্রম করো!';     sub = 'ভয় নেই, আবার চেষ্টা করো!';
+                    grade = 'D · চেষ্টা জারি রাখো';
+                    gStyle = 'background:#fef2f2;border:1px solid #fecaca;color:#b91c1c';
+                }
+
+                document.getElementById('resultEmoji').textContent = emoji;
+                document.getElementById('resultTitle').textContent  = title;
+                document.getElementById('resultSub').textContent    = sub;
+
+                const tag     = document.getElementById('gradeTag');
+                tag.textContent = grade;
+                tag.style.cssText = gStyle + ';padding:8px 22px;border-radius:100px;font-weight:700;font-size:0.9rem;letter-spacing:0.05em;';
+            }
+
+            function resetQuiz() {
+                current  = 0;
+                answers  = new Array(total).fill(null);
+                selected = new Array(total).fill(null);
+
+                document.getElementById('resultView').style.display      = 'none';
+                document.getElementById('quizArea').style.display        = 'block';
+                document.getElementById('scoreboard').style.display      = 'flex';
+                document.getElementById('dotNav').style.display          = 'flex';
+                document.querySelector('.progress-track').style.display  = 'block';
+                document.querySelector('.progress-meta').style.display   = 'flex';
+                document.getElementById('progressFill').style.width      = '0%';
+                document.getElementById('feedback').className            = 'feedback';
+
+                buildDots();
+                render();
+            }
+
+            buildDots();
+            render();
+        </script>
+    </body>
+</html>
